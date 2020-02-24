@@ -3,8 +3,6 @@
 % For each value of p, determine the probability of the link being in the interference state
 % and in the normal state when one control frame is received with errors (fulfil the
 % following table). What do you conclude?
-
-
 clc
 clear all
 
@@ -20,7 +18,11 @@ pI_E = 100-pN_E
 res = [pN_E' pI_E']
 
 
+
+
 %% exercicio 1b
+%For each value of p and for n = 2, 3, 4 and 5, determine the probability of false
+%positives.
 res2 = [];
 for n = [2 3 4 5]
 
@@ -31,7 +33,6 @@ pE_I = pE_I^n;
 
 pN = [0.99 0.999 0.9999 0.99999];
 pI = 1- pN;
-
 
 pN_E = pE_N*pN./(pE_N*pN + pE_I*pI)*100;
 res2=[res2 pN_E'];
@@ -46,12 +47,6 @@ for n = [2 3 4 5]
 
 pN = [0.99 0.999 0.9999 0.99999];
 pI = 1- pN;
-
-% pnotE_N = binomial(10^-7,128*8,0);
-% pnotE_N = pnotE_N^n;
-% 
-% pnotE_I = binomial(10^-3,128*8,0);
-% pnotE_I = pnotE_I^n;
 
 pE_N = 1 - binomial(10^-7,128*8,0);  % p(1 dos bits ter erro)->frame estar errada [em N]
 pE_N = pE_N^n;                       % p(n frames estarem erradas) [em N]
