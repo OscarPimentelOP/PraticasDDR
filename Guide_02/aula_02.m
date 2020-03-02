@@ -83,7 +83,6 @@ pi2 = ((1/180)*(20/40)*(10/20)*(5/2))/pi6
 e2b = pi6*10^(-6)+pi5*10^(-5)+pi4*10^(-4)+pi3*10^(-3)+pi2*10^(-2)
 
 %% exercicio 2.c
-fprintf("2c\n")
 
 T6 = 60/1
 
@@ -103,14 +102,14 @@ averageINT = (pi3*10^(-3)+pi2*10^(-2))/(pi3+pi2)
 
 
 %% exercicio 2.f
-kek = (T3)*(4/5);
+kek = (T3)*(4/5);  %sair de interferencia
 averageTimeInterference = 0;
 
 for r = 1:10
    averageTimeInterference= averageTimeInterference + ((r+1)* T3+ r*T2)*((1/5)^r)*(4/5);
 end
 resf = kek + averageTimeInterference;
-
+fprintf('resf:')
 disp(resf)
    
 
