@@ -91,24 +91,20 @@ L = [];
 %Between Mobile nodes
 N = size(pos, 1);
 L = [];
-W=W^2;
+W=W^2
 for i = 1:N
    for j = i+1 : N
-       p1 = pos(i,:);
-       p2 = pos(j,:);
-      if (p2(1) - p1(1))^2 + (p2(2) - p1(2))^2 <= W
+      if (dist(i, 1) - dist(j,1))^2 + (dist(i, 2) - dist(j,2))^2 <= W
         L = [L; i j]; %appending ID's from 2 connected mobile nodes 
       end
    end
 end
 
 %Mobile nodes & AP's
-APs = size(AP, 1);
+APs = size(AP, 1)
 for i = 1:N
    for j = i+1 : APs
-       p1 = pos(i);
-       p2 = pos(j);
-      if (p2(1) - p1(1))^2 + (p2(2) - p1(2))^2 <= W
+      if (dist(i, 1) - dist(j,1))^2 + (dist(i, 2) - dist(j,2))^2 <= W
         L = [L; i j]; %appending ID's from a connected mobile node and an AP 
       end
    end
@@ -151,7 +147,7 @@ function C= ConnectedNodes(L,N,AP)
     dist = distances(g, mnIDs, aPIDs);
     for i=1:size(dist,1)
         for j=1:size(AP,1) 
-            if not(dist(i,j)== Inf) % In a graph, 2 points aren't connected if the distance is Infinite
+            if not(dist(i,j)==INF) % In a graph, 2 points aren't connected if the distance is Infinite
                 C(1,i) = true; %node not connected
             end
         end
@@ -192,6 +188,7 @@ function visualize(N,AP,pos,L,C,plotar)
     hold off
 end
 
+function distance = distance2Points(p1, p2)
 
 
 
