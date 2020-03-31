@@ -106,8 +106,8 @@ end
 APs = size(AP, 1);
 for i = 1:N
    for j = i+1 : APs
-       p1 = pos(i);
-       p2 = pos(j);
+       p1 = pos(i,:);
+       p2 = pos(j,:);
       if (p2(1) - p1(1))^2 + (p2(2) - p1(2))^2 <= W
         L = [L; i j]; %appending ID's from a connected mobile node and an AP 
       end
