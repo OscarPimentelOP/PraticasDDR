@@ -21,22 +21,23 @@
 clc
 clear all
 
-N = 20;     % mobile nodes
+N = 60;     % mobile nodes
 S = 3;      % speed of mobile nodes
-W = 40;     % radio range in meters
+W = 60;     % radio range in meters
 dlt = 1;   %  dlt - time slot duration (in seconds)
 T = 7200;     %  T -   no. of time slots of the simulation
-AP = [50 50; 250 100; 450 150];   %  matrix with one row per AP node and 2 columns where the
+%AP = [50 50; 250 100; 450 150];   %  matrix with one row per AP node and 2 columns where the
                         %  first column has the horizontal coordinates and the
                         %  second column has the vertical coordinates of the AP nodes
 AP = [250 100];   %  matrix with one row per AP node and 2 columns where the
                         %  first column has the horizontal coordinates and the
                         %  second column has the vertical coordinates of the AP nodes
-pl = 2;  
+pl = 0;  
 
 
 
-simulatorFunction(N,S,W,dlt,T,AP,pl);
+
+[AvgAvail, MinAvail]=simulatorFunction(N,S,W,dlt,T,AP,pl)
 
 
 % clc

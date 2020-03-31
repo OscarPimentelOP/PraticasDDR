@@ -86,36 +86,18 @@ function L= ConnectedList(pos,W,AP)
 %   L -    a matrix with 2 columns; each row identifies a pair of nodes
 %          (mobile nodes and AP nodes) with a direct wireless link
 %          between them
-%Between Mobile nodes
-N = size(pos, 1);
-L = [];
-W=W^2;
-for i = 1:N
-   for j = i+1 : N
-       p1 = pos(i,:);
-       p2 = pos(j,:);
-      if (p2(1) - p1(1))^2 + (p2(2) - p1(2))^2 <= W
-        L = [L; i j]; %appending ID's from 2 connected mobile nodes 
-      end
-   end
+    L = [];
+    dist = 0;
+    tmp = [pos; AP];
+    for i = 1:size(tmp, 1)-1
+        for j = i + 1:size(tmp, 1)
+            dist = ((tmp(i,1)-tmp(j,1))^2) + ((tmp(i,2)-tmp(j,2))^2);
+            if dist <= W ^2
+                L = [L;i j];
+            end
+        end
+    end
 end
-
-%Mobile nodes & AP's
-APs = size(AP, 1);
-
-for i = 1:N
-   for j = 1 : APs
-       p1 = pos(i,:);
-       p2 = AP(j,:);
-
-      if (p2(1) - p1(1))^2 + (p2(2) - p1(2))^2 <= W
-        L = [L; i j+N]; %appending ID's from a connected mobile node and an AP 
-      end
-   end
-end
-end
-
-
 
 function C= ConnectedNodes(L,N,AP)
 % Input:
@@ -160,8 +142,8 @@ function [AverageAvailability, MinimumAvailability]= results(T,counter)
 % This function computes the average and the minimum availability (values
 % between 0 and 1) based on array 'counter' and on the total number of
 % time slots T.
-AverageAvailability = mean(counter./T);
-MinimumAvailability = min(counter./T);
+AverageAvailability = (counter/size(counter, 1))/T;
+MinimumAvailability = min(counter)/T;
 
 
 end
