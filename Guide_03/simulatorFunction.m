@@ -102,7 +102,6 @@ end
 
 %Mobile nodes & AP's
 APs = size(AP, 1);
-
 for i = 1:N
    for j = 1 : APs
        p1 = pos(i,:);
@@ -133,9 +132,6 @@ function C= ConnectedNodes(L,N,AP)
 %
 % 
 
-%Alright, let's do this with graphs ?\_(?)_/?
-%
- 
     C = false(1,N); % Initializing the return array with falses
     
     % Turning mobileNodes and APs to graph
@@ -150,7 +146,7 @@ function C= ConnectedNodes(L,N,AP)
     for i=1:size(dist,1)
         for j=1:N  
             if not(dist(i,j)==Inf) % In a graph, 2 points aren't connected if the distance is Infinite
-                C(i,j) = true; %node not connected
+                C(1,j) = true; %node not connected
             end
         end
     end
