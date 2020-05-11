@@ -16,7 +16,7 @@ in_C = [2 2 2 2 10 10 10 10];
 in_F = [100000 100000 10000 10000 100000 100000 10000 10000];
 
 
-fprintf('Lambda\tC\tf\tPacketLoss\t\tAverageDelay\t\tMaximumDelay\t\tTransm.Through.\n')
+fprintf('Lambda\tC\tf\tSimulation\t\tM/M/1\t\tM/G/1\n')
 for ciclo=1:8
     lambda = in_L(ciclo);
     C = in_C(ciclo);
@@ -49,6 +49,6 @@ for ciclo=1:8
     % fprintf('lambda = %.2d  C = %.2d  f = %.2d\n',lambda,C, f)
 
 %         fprintf('Lambda\tC\tf\tPacketLoss\t\tAverageDelay\t\tMaximumDelay\t\tTransm.Through.\n')
-    fprintf('%.2d\t%.2d\t%.2d\t%.2f +- %.4f\t\t%.2f +- %.3f\t\t%.2f +- %.3f\t\t%.2f +- %.4f\n',lambda,C, f,PL,term_PL,APD,term_APD,MPD,term_MPD,TT,term_TT)
+    fprintf('%.2d\t%.2d\t%.2d\t%.2f +- %.4f\t\t%.4f\t\t%.4f\n',lambda,C,f,APD,term_APD,mm1(lambda,C),mg1(lambda,C))
 
 end
