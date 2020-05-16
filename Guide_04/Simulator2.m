@@ -51,10 +51,10 @@ while TransmittedPackets+TransmittedPacketsV<P               % Stopping criteriu
     EventList(1,:)= [];                  % Eliminate first event
     switch Event
         case ARRIVAL                     % If first event is an ARRIVAL
+            EventList = [EventList; ARRIVAL , Clock + exprnd(1/lambda) , GeneratePacketSize() , 0, DATA];
             switch Type
                 case DATA
                     TotalPackets= TotalPackets+1;
-                    EventList = [EventList; ARRIVAL , Clock + exprnd(1/lambda) , GeneratePacketSize() , 0, DATA];
                     if State==0
                         State= 1;
                         EventList = [EventList; DEPARTURE , Clock + 8*PacketSize/(C*10^6) , PacketSize , Clock, DATA];
@@ -68,7 +68,7 @@ while TransmittedPackets+TransmittedPacketsV<P               % Stopping criteriu
                     end
                 case VOIP
                     TotalPacketsV= TotalPacketsV+1;
-                    EventList = [EventList; ARRIVAL , Clock + 0.016+0.008*rand() , GeneratePacketSizeVOIP() , 0, VOIP];
+%                     EventList = [EventList; ARRIVAL , Clock + 0.016+0.008*rand() , GeneratePacketSizeVOIP() , 0, VOIP];
                     if State==0
                         State= 1;
                         EventList = [EventList; DEPARTURE , Clock +  8*PacketSize/(C*10^6) , PacketSize , Clock, VOIP];
