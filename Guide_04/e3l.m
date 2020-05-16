@@ -8,8 +8,10 @@ clear all
 % present the resultsin the form a+-b
 
 n_simulations = 10;
-
 P = 100000;
+
+% n_simulations = 1;
+% P = 5;
 
 in_L = [200 200 200 200 200 200 1000 1000 1000 1000 1000 1000];
 in_C = [2 2 2 2 2 2 10 10 10 10 10 10];
@@ -17,7 +19,7 @@ in_F = [100000 100000 100000 10000 10000 10000 100000 100000 100000 10000 10000 
 in_N = [5 10 15 5 10 15 25 50 75 25 50 75];
 
 
-fprintf('Lambda\tC\tf\tn\tPacketLossD\tPacketLossV\tAverageDelayD\tAverageDelayV\t\tMaxDelayD\t\tMaxDelayV\t\tTransm.Through.\n')
+fprintf('Lambda\tC\tf\tn\tPacketLossD\tPacketLossV\tAverageDelayD\tAverageDelayV\tMaxDelayD\t\tMaxDelayV\tTransm.Through.\n')
 for ciclo=1:size(in_L,2)
 % for ciclo=[6 12]
     lambda = in_L(ciclo);
@@ -34,7 +36,7 @@ for ciclo=1:size(in_L,2)
     TTs  = zeros(1,n_simulations);
 
     for i = 1:n_simulations
-        [PLs(i), PLVs(i), APDs(i), APDVs(i), MPDs(i), MPDVs(i), TTs(i)] = Simulator2(lambda,n,C,f,P);  
+        [PLs(i), PLVs(i), APDs(i), APDVs(i), MPDs(i), MPDVs(i), TTs(i)] = Simulator3(lambda,n,C,f,P);  
     end
 
 
@@ -59,6 +61,6 @@ for ciclo=1:size(in_L,2)
     % fprintf('lambda = %.2d  C = %.2d  f = %.2d\n',lambda,C, f)
 
 %         fprintf('Lambda\tC\tf\tPacketLoss\t\tAverageDelay\t\tMaximumDelay\t\tTransm.Through.\n')
-    fprintf('%.2d\t%.2d\t%.2d\t%.2d\t%.2f +- %.4f\t%.2f +- %.4f\t%.2f +- %.3f\t%.2f +- %.3f\t\t%.2f +- %.3f\t\t%.2f +- %.3f\t\t%.2f +- %.4f\n',lambda,C, f,n,PL,term_PL,PLV,term_PLV,APD,term_APD,APDV,term_APDV,MPD,term_MPD,MPDV,term_MPDV,TT,term_TT)
+    fprintf('%.2d\t%.2d\t%.2d\t%.2d\t%.2f +- %.4f\t%.2f +- %.4f\t%.2f +- %.3f\t%.2f +- %.3f\t%.2f +- %.3f\t\t%.2f +- %.3f\t%.2f +- %.4f\n',lambda,C, f,n,PL,term_PL,PLV,term_PLV,APD,term_APD,APDV,term_APDV,MPD,term_MPD,MPDV,term_MPDV,TT,term_TT)
 %            lamb    c     f     n       loss d         loss v        aver d      aver v            max d            thr
 end
