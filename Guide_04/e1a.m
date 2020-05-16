@@ -10,6 +10,10 @@ clear all
 n_simulations = 10;
 
 P = 1000;
+
+n_simulations = 1;
+
+P = 10;
 % P = 100000;
 in_L = [100 200 100 200 500 1000 500 1000];
 in_C = [2 2 2 2 10 10 10 10];
@@ -17,7 +21,7 @@ in_F = [100000 100000 10000 10000 100000 100000 10000 10000];
 
 
 fprintf('Lambda\tC\tf\tPacketLoss\t\tAverageDelay\t\tMaximumDelay\t\tTransm.Through.\n')
-for ciclo=1:8
+for ciclo=8:8
     lambda = in_L(ciclo);
     C = in_C(ciclo);
     f = in_F(ciclo);

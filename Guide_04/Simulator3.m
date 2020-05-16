@@ -1,4 +1,4 @@
-function [PL , PLV , APD , APDV , MPD , MPDV , TT] = Simulator2(lambda,n,C,f,P)
+function [PL , PLV , APD , APDV , MPD , MPDV , TT] = Simulator3(lambda,n,C,f,P)
 % INPUT PARAMETERS:
 %  lambda - packet rate (packets/sec)
 %  C      - link bandwidth (Mbps)
@@ -18,7 +18,9 @@ VOIP = 1;
 %State variables:
 State = 0;          % 0 - connection free; 1 - connection bysy
 QueueOccupation= 0; % Occupation of the queue (in Bytes)
+QueueOccupationV= 0; % Occupation of the queue (in Bytes)
 Queue= [];          % Size and arriving time instant of each packet in the queue
+QueueV= [];          % Size and arriving time instant of each packet in the queue
 %Statistical Counters:
 TotalPackets= 0;       % No. of packets arrived to the system
 TotalPacketsV= 0;       % No. of packets arrived to the system
@@ -43,23 +45,32 @@ end
 %Similation loop:
 while TransmittedPackets+TransmittedPacketsV<P               % Stopping criterium
     EventList= sortrows(EventList,2);    % Order EentList by time
-    Event= EventList(1,1);               % Get first event and 
-    Clock= EventList(1,2);               %   and
-    PacketSize= EventList(1,3);          %   associated
-    ArrivalInstant= EventList(1,4);      %   parameters.
-    Type=EventList(1,5 );
-    EventList(1,:)= [];                  % Eliminate first event
+    if size(EventList,1)>0
+        Event= EventList(1,1);               % Get first event and 
+        Clock= EventList(1,2);               %   and
+        PacketSize= EventList(1,3);          %   associated
+        ArrivalInstant= EventList(1,4);      %   parameters.
+        Type=EventList(1,5 );
+        EventList(1,:)= [];                  % Eliminate first event
+    else
+        Event= EventList(1,1);               % Get first event and 
+        Clock= EventList(1,2);               %   and
+        PacketSize= EventList(1,3);          %   associated
+        ArrivalInstant= EventList(1,4);      %   parameters.
+        Type=EventList(1,5 );
+        EventList(1,:)= [];                  % Eliminate first event
+    end
     switch Event
         case ARRIVAL                     % If first event is an ARRIVAL
             switch Type
                 case DATA
-                    EventList = [EventList; ARRIVAL , Clock + exprnd(1/lambda) , GeneratePacketSize() , 0, DATA];
                     TotalPackets= TotalPackets+1;
+                    EventList = [EventList; ARRIVAL , Clock + exprnd(1/lambda) , GeneratePacketSize() , 0, DATA];
                     if State==0
                         State= 1;
                         EventList = [EventList; DEPARTURE , Clock + 8*PacketSize/(C*10^6) , PacketSize , Clock, DATA];
                     else
-                        if QueueOccupation + PacketSize <= f
+                        if QueueOccupation + QueueOccupationV + PacketSize <= f
                             Queue= [Queue;PacketSize , Clock, Type];
                             QueueOccupation= QueueOccupation + PacketSize;
                         else
@@ -73,9 +84,9 @@ while TransmittedPackets+TransmittedPacketsV<P               % Stopping criteriu
                         State= 1;
                         EventList = [EventList; DEPARTURE , Clock +  8*PacketSize/(C*10^6) , PacketSize , Clock, VOIP];
                     else
-                        if QueueOccupation + PacketSize <= f
-                            Queue= [Queue;PacketSize , Clock, Type];
-                            QueueOccupation= QueueOccupation + PacketSize;
+                        if QueueOccupation + QueueOccupationV + PacketSize <= f
+                            QueueV= [QueueV;PacketSize , Clock, Type];
+                            QueueOccupationV= QueueOccupationV + PacketSize;
                         else
                             LostPacketsV= LostPacketsV + 1;
                         end
@@ -90,7 +101,11 @@ while TransmittedPackets+TransmittedPacketsV<P               % Stopping criteriu
                         MaxDelay= Clock - ArrivalInstant;
                     end
                     TransmittedPackets= TransmittedPackets + 1;
-                    if QueueOccupation > 0
+                    if QueueOccupationV > 0
+                        EventList = [EventList; DEPARTURE , Clock + 8*QueueV(1,1)/(C*10^6) , QueueV(1,1) , QueueV(1,2), QueueV(1,3)];
+                        QueueOccupationV= QueueOccupationV - QueueV(1,1);
+                        QueueV(1,:)= [];
+                    elseif QueueOccupation > 0
                         EventList = [EventList; DEPARTURE , Clock + 8*Queue(1,1)/(C*10^6) , Queue(1,1) , Queue(1,2), Queue(1,3)];
                         QueueOccupation= QueueOccupation - Queue(1,1);
                         Queue(1,:)= [];
@@ -104,14 +119,18 @@ while TransmittedPackets+TransmittedPacketsV<P               % Stopping criteriu
                         MaxDelayV= Clock - ArrivalInstant;
                     end
                     TransmittedPacketsV= TransmittedPacketsV + 1;
-                    if QueueOccupation > 0
+                    if QueueOccupationV > 0
+                        EventList = [EventList; DEPARTURE , Clock + 8*QueueV(1,1)/(C*10^6) , QueueV(1,1) , QueueV(1,2), QueueV(1,3)];
+                        QueueOccupationV= QueueOccupationV - QueueV(1,1);
+                        QueueV(1,:)= [];
+                     elseif QueueOccupation > 0
                         EventList = [EventList; DEPARTURE , Clock + 8*Queue(1,1)/(C*10^6) , Queue(1,1) , Queue(1,2), Queue(1,3)];
                         QueueOccupation= QueueOccupation - Queue(1,1);
                         Queue(1,:)= [];
                     else
                         State= 0;
                     end
-                    end
+            end
     end
 end
 
