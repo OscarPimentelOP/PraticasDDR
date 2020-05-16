@@ -22,8 +22,6 @@ for ciclo=1:8
     C = in_C(ciclo);
     f = in_F(ciclo);
 
-
-
     PLs  = zeros(1,n_simulations);
     APDs = zeros(1,n_simulations);
     MPDs = zeros(1,n_simulations);
@@ -32,7 +30,6 @@ for ciclo=1:8
     for i = 1:n_simulations
         [PLs(i) , APDs(i) , MPDs(i) , TTs(i)] = Simulator1(lambda,C,f,P);  
     end
-
 
     alfa= 0.1; %90% confidence interval%
 
