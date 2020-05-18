@@ -46,21 +46,12 @@ end
 %Similation loop:
 while TransmittedPackets+TransmittedPacketsV<P               % Stopping criterium
     EventList= sortrows(EventList,2);    % Order EentList by time
-    if size(EventList,1)>0
-        Event= EventList(1,1);               % Get first event and 
-        Clock= EventList(1,2);               %   and
-        PacketSize= EventList(1,3);          %   associated
-        ArrivalInstant= EventList(1,4);      %   parameters.
-        Type=EventList(1,5 );
-        EventList(1,:)= [];                  % Eliminate first event
-    else
-        Event= EventList(1,1);               % Get first event and 
-        Clock= EventList(1,2);               %   and
-        PacketSize= EventList(1,3);          %   associated
-        ArrivalInstant= EventList(1,4);      %   parameters.
-        Type=EventList(1,5 );
-        EventList(1,:)= [];                  % Eliminate first event
-    end
+    Event= EventList(1,1);               % Get first event and 
+    Clock= EventList(1,2);               %   and
+    PacketSize= EventList(1,3);          %   associated
+    ArrivalInstant= EventList(1,4);      %   parameters.
+    Type=EventList(1,5 );
+    EventList(1,:)= [];                  % Eliminate first event
     switch Event
         case ARRIVAL                     % If first event is an ARRIVAL
             switch Type
@@ -71,7 +62,7 @@ while TransmittedPackets+TransmittedPacketsV<P               % Stopping criteriu
                         State= 1;
                         EventList = [EventList; DEPARTURE , Clock + 8*PacketSize/(C*10^6) , PacketSize , Clock, DATA];
                     else
-                        if QueueOccupation + QueueOccupationV + PacketSize <= maxDatainQueue
+                        if QueueOccupation + QueueOccupationV  <= maxDatainQueue && QueueOccupation + QueueOccupationV + PacketSize <= f
                             Queue= [Queue;PacketSize , Clock, Type];
                             QueueOccupation= QueueOccupation + PacketSize;
                         else

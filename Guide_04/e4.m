@@ -19,7 +19,7 @@ in_F = [10000 10000 10000 10000 10000 10000];
 in_N = [5 10 15 25 50 75];
 
 
-fprintf('Lambda\tC\tr\tn\tPacketLossD\tPacketLossV\tAverageDelayD\tAverageDelayV\tMaxDelayD\t\tMaxDelayV\tTransm.Through.\n')
+fprintf('Lambda\tC\tr\tn\tPacketLossD\t\tPacketLossV\t\tAverageDelayD\tAverageDelayV\t\tMaxDelayD\t\tMaxDelayV\tTransm.Through.\n')
 for r = [25 50 75]
     for ciclo=1:size(in_L,2)
     % for ciclo=[6 12]
@@ -62,7 +62,7 @@ for r = [25 50 75]
         % fprintf('lambda = %.2d  C = %.2d  f = %.2d\n',lambda,C, f)
 
     %         fprintf('Lambda\tC\tf\tPacketLoss\t\tAverageDelay\t\tMaximumDelay\t\tTransm.Through.\n')
-        fprintf('%.2d\t%.2d\t%.2d\t%.2d\t%.2f +- %.4f\t%.2f +- %.4f\t%.2f +- %.3f\t%.2f +- %.3f\t%.2f +- %.3f\t\t%.2f +- %.3f\t%.2f +- %.4f\n',lambda,C, r,n,PL,term_PL,PLV,term_PLV,APD,term_APD,APDV,term_APDV,MPD,term_MPD,MPDV,term_MPDV,TT,term_TT)
+        fprintf('%.2d\t%.2d\t%.2d\t%.2d\t%.2f +- %.4f\t\t%.2f +- %.4f\t\t%.2f +- %.3f\t%.2f +- %.3f\t\t%.2f +- %.3f\t\t%.2f +- %.3f\t%.2f +- %.4f\n',lambda,C, r,n,PL,term_PL,PLV,term_PLV,APD,term_APD,APDV,term_APDV,MPD,term_MPD,MPDV,term_MPDV,TT,term_TT)
     %            lamb    c     f     n       loss d         loss v        aver d      aver v            max d            thr
     end
 end
