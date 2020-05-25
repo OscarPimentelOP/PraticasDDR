@@ -15,7 +15,8 @@ P = 100000;
 C= 10;
 f= 10000;
 
-
+n_simulations = 1;
+p=1;
 lambdas = [250 500 750 1000 1250 1350 1450 1550 1650 1750 2000 2250 2500];
 lambdas_size = size(lambdas,2);
 
@@ -154,28 +155,34 @@ end
 
 figure(1)
 plot(lambdas, res_PL_F,'-b', lambdas, res_PL_G,'-r')
-axis([250 2500 0 30])
+% axis([250 2500 0 30])
 legend('Packet Loss f=10000 Bytes','Packet Loss f=100000 Bytes','location','northwest')
 title("Packet Loss (%)")
 xlabel('Packet Rate (pps)')
 ylabel('Packet Loss (%)')
 grid on
+xlim([250, 2500]);
+ylim([0, 30]);
+
 
 figure(2)
 plot(lambdas, res_APD_F,'-b',lambdas, res_MPD_F,'--b',lambdas, res_APD_G,'-r',lambdas, res_MPD_G,'--r')
-axis([250 2500 0 83])
+% axis([250 2500 0 83])
 legend('Average Packet Delay f=10000 Bytes','Maximum Packet Delay f=10000 Bytes','Average Packet Delay f=100000 Bytes','Maximum Packet Delay f=100000 Bytes','location','northwest')
 title("Average and Maximum Packet Delay (ms)")
 xlabel('Packet Rate (pps)')
 ylabel('ms')
 grid on
+xlim([250, 2500]);
+ylim([0, 83]);
 
 figure(3)
 plot(lambdas, res_TT_F, '-b',lambdas, res_TT_G, '-r')
-axis([250 2500 0 11])
+% axis([250 2500 0 11])
 legend('Transmitted Throughput f=10000 Bytes','Transmitted Throughput f=100000 Bytes','location','northwest')
 title("Transmitted  Throughput (Mbps)")
 xlabel('Packet Rate (pps)')
 ylabel("Transmitted  Throughput (Mbps)")
 grid on
-
+xlim([250, 2500]);
+ylim([0, 11]);

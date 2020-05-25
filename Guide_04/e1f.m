@@ -184,3 +184,12 @@ xlabel('Packet Rate (pps)')
 ylabel("Transmitted  Throughput (Mbps)")
 grid on
 
+
+figure(4)
+plot(lambdas, res_APD_F,'-b',lambdas, res_MPD_F,'--b')
+axis([50 500 0 50])
+legend('Average Packet Delay f=10000 Bytes','Maximum Packet Delay f=10000 Bytes','location','northwest')
+title("Average and Maximum Packet Delay (ms)")
+xlabel('Packet Rate (pps)')
+ylabel('ms')
+grid on
